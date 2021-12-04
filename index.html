@@ -88,7 +88,7 @@
                 <div></div>
                 <div className="AppGrid_AppGrid__33iLW">
                     <input type="text"
-                           class="SearchBar_SearchBar__2Pbl1" v-model="search" placeholder="Search" autofocus/>
+                           class="SearchBar_SearchBar__2Pbl1" v-model="search" @keyup.enter="submitSearch" placeholder="Search" autofocus/>
                 </div>
                 <header class="Header_Header__2oavH"><p>{{date}}</p><span
                         class="Header_HeaderMain__ZUhf5"><h1>{{greeting}}</h1>
@@ -148,7 +148,30 @@
             };
         },
         methods:{
-
+            submitSearch(){
+                const filteredApps=this.apps;
+                const filteredCategories=this.categories;
+                if(filteredApps.length===0){
+                    if(filteredCategories.length===1){
+                        //only one category, no apps, check if there is only one link
+                        let links=filteredCategories[0].links.filter((link)=>{
+                            const lowerSearch=this.search.toLowerCase();
+                            return link.name.toLowerCase().includes(lowerSearch)||
+                                link.url.toLowerCase().includes(lowerSearch);
+                            });
+                        if(links.length===1){
+                            //only one link, go!
+                            window.location.href=links[0].url;
+                        }
+                    }
+                }
+                else if(filteredCategories.length===0){
+                    if(filteredApps.length===1){
+                        //only one app, go!
+                        window.location.href=filteredApps[0].url;
+                    }
+                }
+            }
         },
         computed:{
             apps(){ //filter based on search
