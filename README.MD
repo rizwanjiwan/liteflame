@@ -9,7 +9,7 @@ I made some changes too for my own needs:
 - Removed the weather feature
 - Changed the search to search the page rather than hit a search engine (I'd rather just use the built-in address bar search since it provides autocomplete against search engines)
 
-When the page first loads, just start typing to filter. If you get down to 1 item, hit enter and the page will just load the app/bookmark.
+When the page first loads, just start typing to filter. If you get down to 1 item, hit enter and the page will just load the app/bookmark. If you get to 0 items and hit enter, a Google search will kick off.
 
 To use this:
 1. Clone the repo
