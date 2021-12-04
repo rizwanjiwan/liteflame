@@ -1,0 +1,176 @@
+<script>
+    let config={
+        computeDate:(today)=>{   //specify whatever code you want to spit out the date. Today is a Date object that you should compute against
+            const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+            const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+            return days[today.getDay()]+" "+months[today.getMonth()]+" "+today.getDate()+", "+today.getFullYear()
+        },
+        greetings: { //specify whatever greetings you want based on the time of day
+            morning:"Good morning!",
+            afternoon:"Good afternoon!",
+            evening:"Good evening!",
+            night:"Good night!"
+        },
+        apps:[  //just keep adding apps in here
+            {
+                name: 'Hacker news',
+                subText:'news.ycombinator.com',
+                url: 'https://news.ycombinator.com',
+                icon:'https://news.ycombinator.com/favicon.ico'
+            },
+            {
+                name: 'Apple news',
+                subText:'Desktop app',
+                url: 'applenews://',
+                icon:'https://help.apple.com/assets/5FFC9CD8269D2F33DD055AB0/5FFC9CD9269D2F33DD055AB7/en_US/1cf79f55db1e3c801aa9eba95b6bd87c.png'
+            },
+            {
+                name: 'Reddit',
+                subText:'reddit.com',
+                url: 'https://reddit.com',
+                icon:'https://www.iconpacks.net/icons/2/free-reddit-logo-icon-2436.png'
+            }
+        ],
+        categories:[
+            {
+                name:"Social",
+                links:[
+                    {
+                        name:"Twitter",
+                        url:"https://twitter.com"
+                    },
+                    {
+                        name:"LinkedIn",
+                        url:"https://linkedin.com"
+                    }
+                ]
+            },
+            {
+                name:"Coding",
+                links:[
+                    {
+                        name:"Vue.js Docs",
+                        url:"https://v3.vuejs.org/api/"
+                    },
+                    {
+                        name:"MDN JS Docs",
+                        url:"https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                    },
+                ]
+            },
+        ]
+    }
+</script>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="icon" href="/icons/favicon.ico">
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-touch-icon-76x76.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-touch-icon-114x114.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon-120x120.png">
+        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-touch-icon-144x144.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-touch-icon-152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-180x180.png">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="description" content="Flame - self-hosted startpage for your server">
+        <title>Start page</title>
+        <link href="css/main.css" rel="stylesheet">
+        <script src="https://unpkg.com/vue@next"></script>
+    </head>
+    <body style="--color-background: #242B33; --color-primary: #EFFBFF; --color-accent: #6EE2FF;">
+        <div id="app">
+            <div class="Layout_Container__2Hv3J">
+                <div></div>
+                <div className="AppGrid_AppGrid__33iLW">
+                    <input type="text"
+                           class="SearchBar_SearchBar__2Pbl1" v-model="search" placeholder="Search" autofocus/>
+                </div>
+                <header class="Header_Header__2oavH"><p>{{date}}</p><span
+                        class="Header_HeaderMain__ZUhf5"><h1>{{greeting}}</h1>
+                </span></header>
+               <h2 class="SectionHeadline_SectionHeadline__2gmr_">Applications</h2>
+
+                <div class="AppGrid_AppGrid__33iLW">
+
+                    <a v-for="app in apps" v-bind:href="app.url" rel="noreferrer" class="AppCard_AppCard__1V2_0">
+                        <div class="AppCard_AppCardIcon__8ZZTq">
+                            <img v-bind:src="app.icon" class="AppCard_CustomIcon__2hMRh"></div>
+                        <div class="AppCard_AppCardDetails__tbAhY"><h5>{{app.name}}</h5><span>{{app.subText}}</span></div>
+                    </a>
+
+                </div>
+
+                <div class="Home_HomeSpace__2q0OU"></div>
+                <h2 class="SectionHeadline_SectionHeadline__2gmr_">Bookmarks</h2>
+                <div class="BookmarkGrid_BookmarkGrid__26LlR">
+
+                    <div v-for="category in categories" class="BookmarkCard_BookmarkCard__1GmHc">
+                        <h3 class="">{{category.name}}</h3>
+                        <div v-for="link in category.links" class="BookmarkCard_Bookmarks__YhsfD">
+                            <a v-bind:href="link.url" rel="noreferrer">
+                                {{link.name}}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    const lightFlame=Vue.createApp({
+        data(){
+            //calculate the
+            const today=new Date();
+            const hour=today.getHours();
+            let greeting=config.greetings.morning;
+            if(hour>11){//afternoon at least
+                greeting=config.greetings.afternoon;
+                if(hour>16){//evening at least
+                    greeting=config.greetings.evening;
+                    if(hour>19){//it's night
+                        greeting=config.greetings.night;
+                    }
+                }
+            }
+            return {
+                date: config.computeDate(today),
+                greeting: greeting,
+                search:"",
+                allApps:config.apps,
+                allCategories:config.categories
+            };
+        },
+        methods:{
+
+        },
+        computed:{
+            apps(){ //filter based on search
+                return this.allApps.filter((app)=>{
+                    const lowerSearch=this.search.toLowerCase();
+                    return app.name.toLowerCase().includes(lowerSearch)||
+                        app.subText.toLowerCase().includes(lowerSearch)||
+                        app.url.toLowerCase().includes(lowerSearch);
+                });
+            },
+            categories(){//filter based on search
+                return this.allCategories.filter((category)=>{
+                    const lowerSearch=this.search.toLowerCase();
+                    return category.name.toLowerCase().includes(lowerSearch)||
+                        category.links.filter((link)=>{
+                            const lowerSearch=this.search.toLowerCase();
+                            return link.name.toLowerCase().includes(lowerSearch)||
+                            link.url.toLowerCase().includes(lowerSearch);
+                        }).length>0
+                });
+            }
+        },
+        components: {
+        }
+    });
+    const consoleMount=lightFlame.mount('#app');
+</script>
