@@ -166,6 +166,20 @@
                         }
                     }
                     else if(filteredCategories.length===0){
+                        //check if it's probably a URL
+                        if((this.search.includes(' ')===false)&&(this.search.includes('.')===true)){//check if it's a url
+                            const expression = /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
+                            const regex = new RegExp(expression);
+
+                            if (this.search.match(regex)) { //bump 'em over
+                                let url=this.search;
+                                if(url.includes('http')===false){
+                                    url='http://'+url;
+                                }
+                                window.location.href=url;
+                                return;
+                            }
+                        }
                         //google search it is.
                         window.location.href='https://www.google.com/search?rls=en&q='+this.search+'&ie=UTF-8&oe=UTF-8'
                     }
