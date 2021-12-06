@@ -64,64 +64,64 @@
     //stop editing here
 </script>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="icon" href="/icons/favicon.ico">
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
-        <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-touch-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-touch-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-touch-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-touch-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-touch-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-180x180.png">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta name="description" content="Flame - self-hosted startpage for your server">
-        <title>Start page</title>
-        <link href="css/main.css" rel="stylesheet">
-        <script src="https://unpkg.com/vue@next"></script>
-    </head>
-    <body style="--color-background: #242B33; --color-primary: #EFFBFF; --color-accent: #6EE2FF;">
-        <div id="app">
-            <div class="Layout_Container__2Hv3J">
-                <div></div>
-                <div className="AppGrid_AppGrid__33iLW">
-                    <input type="text"
-                           class="SearchBar_SearchBar__2Pbl1" v-model="search" @keyup.enter="submitSearch" placeholder="Search" autofocus/>
-                </div>
-                <header class="Header_Header__2oavH" v-show="search.length===0"><p>{{date}}</p><span
-                        class="Header_HeaderMain__ZUhf5"><h1>{{greeting}}</h1>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/icons/favicon.ico">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-180x180.png">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Flame - self-hosted startpage for your server">
+    <title>Start page</title>
+    <link href="css/main.css" rel="stylesheet">
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body style="--color-background: #242B33; --color-primary: #EFFBFF; --color-accent: #6EE2FF;">
+<div id="app">
+    <div class="Layout_Container__2Hv3J">
+        <div></div>
+        <div className="AppGrid_AppGrid__33iLW">
+            <input type="text"
+                   class="SearchBar_SearchBar__2Pbl1" v-model="search" @keyup.enter="submitSearch" @keyup.esc="clearSearch" placeholder="Search" autofocus/>
+        </div>
+        <header class="Header_Header__2oavH" v-show="search.length===0"><p>{{date}}</p><span
+                class="Header_HeaderMain__ZUhf5"><h1>{{greeting}}</h1>
                 </span></header>
-               <h2 class="SectionHeadline_SectionHeadline__2gmr_" v-show="apps.length>0">Applications</h2>
+        <h2 class="SectionHeadline_SectionHeadline__2gmr_" v-show="apps.length>0">Applications</h2>
 
-                <div class="AppGrid_AppGrid__33iLW">
+        <div class="AppGrid_AppGrid__33iLW">
 
-                    <a v-for="app in apps" v-bind:href="app.url" rel="noreferrer" class="AppCard_AppCard__1V2_0">
-                        <div class="AppCard_AppCardIcon__8ZZTq">
-                            <img v-bind:src="app.icon" class="AppCard_CustomIcon__2hMRh"></div>
-                        <div class="AppCard_AppCardDetails__tbAhY"><h5>{{app.name}}</h5><span>{{app.subText}}</span></div>
+            <a v-for="app in apps" v-bind:href="app.url" rel="noreferrer" class="AppCard_AppCard__1V2_0">
+                <div class="AppCard_AppCardIcon__8ZZTq">
+                    <img v-bind:src="app.icon" class="AppCard_CustomIcon__2hMRh"></div>
+                <div class="AppCard_AppCardDetails__tbAhY"><h5>{{app.name}}</h5><span>{{app.subText}}</span></div>
+            </a>
+
+        </div>
+
+        <div class="Home_HomeSpace__2q0OU"></div>
+        <h2 class="SectionHeadline_SectionHeadline__2gmr_" v-show="categories.length>0">Bookmarks</h2>
+        <div class="BookmarkGrid_BookmarkGrid__26LlR">
+
+            <div v-for="category in categories" class="BookmarkCard_BookmarkCard__1GmHc">
+                <h3 class="">{{category.name}}</h3>
+                <div v-for="link in category.links" class="BookmarkCard_Bookmarks__YhsfD">
+                    <a v-bind:href="link.url" rel="noreferrer">
+                        {{link.name}}
                     </a>
-
                 </div>
-
-                <div class="Home_HomeSpace__2q0OU"></div>
-                <h2 class="SectionHeadline_SectionHeadline__2gmr_" v-show="categories.length>0">Bookmarks</h2>
-                <div class="BookmarkGrid_BookmarkGrid__26LlR">
-
-                    <div v-for="category in categories" class="BookmarkCard_BookmarkCard__1GmHc">
-                        <h3 class="">{{category.name}}</h3>
-                        <div v-for="link in category.links" class="BookmarkCard_Bookmarks__YhsfD">
-                            <a v-bind:href="link.url" rel="noreferrer">
-                                {{link.name}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <h2 class="SectionHeadline_SectionHeadline__2gmr_" v-show="categories.length===0&&apps.length===0">Hit enter to search Google...</h2>
             </div>
         </div>
-    </body>
+        <h2 class="SectionHeadline_SectionHeadline__2gmr_" v-show="categories.length===0&&apps.length===0">Hit enter to search Google...</h2>
+    </div>
+</div>
+</body>
 </html>
 
 <script>
@@ -159,7 +159,7 @@
                             const lowerSearch=this.search.toLowerCase();
                             return link.name.toLowerCase().includes(lowerSearch)||
                                 link.url.toLowerCase().includes(lowerSearch);
-                            });
+                        });
                         if(links.length===1){
                             //only one link, go!
                             window.location.href=links[0].url;
@@ -190,6 +190,9 @@
                         window.location.href=filteredApps[0].url;
                     }
                 }
+            },
+            clearSearch(){
+                this.search="";
             }
         },
         computed:{
@@ -208,7 +211,7 @@
                         category.links.filter((link)=>{
                             const lowerSearch=this.search.toLowerCase();
                             return link.name.toLowerCase().includes(lowerSearch)||
-                            link.url.toLowerCase().includes(lowerSearch);
+                                link.url.toLowerCase().includes(lowerSearch);
                         }).length>0
                 });
             }
