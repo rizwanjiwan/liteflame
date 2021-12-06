@@ -7,9 +7,7 @@ Overall, it provides a single page home page where you can list apps and links (
 
 I made some changes too for my own needs:
 - Removed the weather feature
-- Changed the search to search the page rather than hit a search engine (I'd rather just use the built-in address bar search since it provides autocomplete against search engines)
-
-When the page first loads, just start typing to filter. If you get down to 1 item, hit enter and the page will just load the app/bookmark. If you get to 0 items and hit enter, a Google search will kick off.
+- Changed the search to search the page rather than hit a search engine (I'd rather just use the built-in address bar search since it provides autocomplete against search engines). When the page first loads, just start typing to filter. If you get down to 1 item, hit enter and the page will just load the app/bookmark. If you get down to zero items, it will send you over to google with with the search term.
 
 To use this:
 1. Clone the repo
