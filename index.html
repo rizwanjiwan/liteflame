@@ -215,7 +215,7 @@
                 });
             },
             categories(){//filter based on search
-                return this.allCategories.filter((category)=>{
+                let filteredCategories=this.allCategories.filter((category)=>{
                     const lowerSearch=this.search.toLowerCase();
                     return category.name.toLowerCase().includes(lowerSearch)||
                         category.links.filter((link)=>{
@@ -224,6 +224,17 @@
                                 link.url.toLowerCase().includes(lowerSearch);
                         }).length>0
                 });
+                filteredCategories=filteredCategories.map((category)=>{
+                    return{
+                        name:category.name,
+                        links:category.links.filter((link)=>{ const lowerSearch=this.search.toLowerCase();
+                            return link.name.toLowerCase().includes(lowerSearch)||
+                                link.url.toLowerCase().includes(lowerSearch);
+                        })
+                    }
+
+                });
+                return filteredCategories;
             }
         },
         components: {
